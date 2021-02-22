@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { TokenContext } from "./TokenContext";
-import { useHistory } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -8,11 +7,10 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [token, setToken] = useContext(TokenContext);
-  const history = useHistory();
+  const { setToken } = useContext(TokenContext);
 
   useEffect(() => {
-    if (props.location.state.email && props.location.state.password) {
+    if (props.location.state && props.location.state.email) {
       setEmail(props.location.state.email);
       setPassword(props.location.state.password);
     }
@@ -20,19 +18,26 @@ export default function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://yummydb-api.herokuapp.com/login`, {
-    // fetch(`http://localhost:5000/login`, {
+    fetch("https://yummydb-api.herokuapp.com/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          let token = res.headers.get("auth");
+          setToken(token);
+          console.log(token);
+        }
+        return res.json();
+      })
       .then((data) => {
+        console.log(data);
         if (data.err) {
           setErrMsg(data.err);
         } else {
-          setToken(data.token);
-          history.push("/");
+          props.history.push("/");
         }
       });
   };

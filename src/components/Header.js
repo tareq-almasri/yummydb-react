@@ -23,17 +23,16 @@ import {
 } from "reactstrap";
 import SearchBar from "./SearchBar";
 import Profile from "./Profile";
-// import { useHistory, Link } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [token, setToken] = useContext(TokenContext);
+  const {token, setToken} = useContext(TokenContext);
   const [show, setShow] = useState(false);
-  // const history=useHistory();
 
   const handleSignOut = () => {
     setToken(null);
+    setShow(false);
     localStorage.removeItem("token");
   };
   const handleShowInfo = () => {
@@ -44,8 +43,7 @@ const Header = () => {
 
   useEffect(() => {
     if (token) {
-      fetch(`https://yummydb-api.herokuapp.com/check-token`, {
-      // fetch(`http://localhost:5000/check-token`, {
+      fetch("https://yummydb-api.herokuapp.com/check-token", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

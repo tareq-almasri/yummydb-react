@@ -1,30 +1,40 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
 export default function Info(props) {
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [age, setAge] = useState("");
-  const [male, setMale] = useState(false);
-  const [female, setFemale] = useState(false);
-  const [ecto, setEcto] = useState(false);
-  const [meso, setMeso] = useState(false);
-  const [endo, setEndo] = useState(false);
-  const [NEAT, setNEAT] = useState(0);
-  const [gain, setGain] = useState(false);
-  const [lose, setLose] = useState(false);
-  const [maintain, setMaintain] = useState(false);
-  const [goal, setGoal] = useState(0);
-  const [lowCarbs, setLowCarbs] = useState(false);
-  const [moderateCarbs, setModerateCarbs] = useState(false);
-  const [highCarbs, setHighCarbs] = useState(false);
-  const [daysOfWorkout, setDaysOfWorkouts] = useState(0);
-  const [durationOfWorkout, setDurationOfWorkout] = useState(0);
-  const [index, setIndex] = useState(0);
+  const [user, setUser] = useState({
+    email: props.location.state.email,
+    password: props.location.state.password,
+    username: props.location.state.username,
+    tdee: 0,
+    goalCal: 0,
+    goal: 0,
+    index: 0,
+    neat: 0,
+    protein: 0,
+    carbs: 0,
+    fat: 0,
+    sugar: 0,
+    height: 0,
+    weight: 0,
+    age: 0,
+    male: false,
+    female: false,
+    daysOfWorkout: 0,
+    durationOfWorkout: 0,
+    ecto: false,
+    meso: false,
+    endo: false,
+    lose: false,
+    gain: false,
+    maintain: false,
+    lowCarbs: false,
+    moderateCarbs: false,
+    highCarbs: false,
+  });
+
   const [errMsg, setErrMsg] = useState("");
-  const history = useHistory();
 
   const ratios = [
     {
@@ -50,73 +60,54 @@ export default function Info(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     let result =
-      9.99 * parseFloat(weight) +
-      6.25 * parseFloat(height) -
-      4.92 * parseFloat(age);
+      9.99 * parseFloat(user.weight) +
+      6.25 * parseFloat(user.height) -
+      4.92 * parseFloat(user.age);
 
-    console.log(result);
+    let BMR = Math.floor(user.male ? result + 5 : result - 161);
 
-    let BMR = Math.floor(male ? result + 5 : result - 161);
-    console.log(BMR);
     let percentOfBMR = Math.floor((7 * BMR) / 100);
 
-    let EPOC = parseFloat(daysOfWorkout) * percentOfBMR;
-    console.log(EPOC);
+    let EPOC = parseFloat(user.daysOfWorkout) * percentOfBMR;
+
     let TEA = Math.floor(
-      (parseFloat(daysOfWorkout) * parseFloat(durationOfWorkout) * 9 + EPOC) / 7
+      (parseFloat(user.daysOfWorkout) * parseFloat(user.durationOfWorkout) * 9 +
+        EPOC) /
+        7
     );
-    console.log(TEA);
-    let total = BMR + TEA + NEAT;
-    console.log(total);
+
+    let total = BMR + TEA + user.neat;
+
     let TEF = Math.floor(total / 10);
 
     let TDEE = total + TEF;
 
-    let goalCal = TDEE + goal;
+    let GoalCal = TDEE + user.goal;
 
-    let protein = Math.floor((TDEE * ratios[index].protein) / 100 / 4);
-    let carbs = Math.floor((TDEE * ratios[index].carbs) / 100 / 4);
-    let fat = Math.floor((TDEE * ratios[index].fat) / 100 / 9);
+    let protein = Math.floor((TDEE * ratios[user.index].protein) / 100 / 4);
+    let carbs = Math.floor((TDEE * ratios[user.index].carbs) / 100 / 4);
+    let fat = Math.floor((TDEE * ratios[user.index].fat) / 100 / 9);
     let sugar;
-    male ? (sugar = 37.5) : (sugar = 25);
+    user.male ? (sugar = 37.5) : (sugar = 25);
 
     if (TDEE > 0) {
-      console.log(TDEE, goalCal, protein, carbs, fat, sugar);
-      fetch(`https://yummydb-api.herokuapp.com/create-account`, {
-      // fetch(`http://localhost:5000/create-account`, {
+      console.log(TDEE, GoalCal, protein, carbs, fat, sugar);
+      fetch("https://yummydb-api.herokuapp.com/create-account", {
         method: "POST",
         body: JSON.stringify({
-          email: props.location.state.email,
-          password: props.location.state.password,
-          username: props.location.state.username,
+          ...user,
           tdee: TDEE,
-          goalCal: goalCal,
           protein: protein,
           carbs: carbs,
           fat: fat,
           sugar: sugar,
-          height: height,
-          weight: weight,
-          age: age,
-          male: male,
-          female: female,
-          daysOfWorkout: daysOfWorkout,
-          durationOfWorkout: durationOfWorkout,
-          ecto: ecto,
-          meso: meso,
-          endo: endo,
-          lose: lose,
-          gain: gain,
-          maintain: maintain,
-          lowCarbs: lowCarbs,
-          moderateCarbs: moderateCarbs,
-          highCarbs: highCarbs,
+          goalCal: GoalCal,
         }),
         headers: { "Content-Type": "application/json" },
       })
         .then((response) => response.json())
         .then((data) => console.log(data));
-      history.push({
+      props.history.push({
         pathname: "/login",
         state: {
           email: props.location.state.email,
@@ -146,8 +137,8 @@ export default function Info(props) {
             <input
               className="userInfo"
               type="number"
-              onChange={(e) => setHeight(e.target.value)}
-              value={height}
+              onChange={(e) => setUser({ ...user, height: e.target.value })}
+              value={user.height}
               placeholder="Height (cm)"
               style={{ padding: "3px" }}
             />
@@ -155,8 +146,8 @@ export default function Info(props) {
             <input
               className="userInfo"
               type="number"
-              onChange={(e) => setWeight(e.target.value)}
-              value={weight}
+              onChange={(e) => setUser({ ...user, weight: e.target.value })}
+              value={user.weight}
               placeholder="Weight (kg)"
               style={{ padding: "3px" }}
             />
@@ -164,8 +155,8 @@ export default function Info(props) {
             <input
               className="userInfo"
               type="number"
-              onChange={(e) => setAge(e.target.value)}
-              value={age}
+              onChange={(e) => setUser({ ...user, age: e.target.value })}
+              value={user.age}
               placeholder="Age (year)"
               style={{ padding: "3px" }}
             />
@@ -182,10 +173,13 @@ export default function Info(props) {
                   id="male"
                   type="radio"
                   name="gender"
-                  onChange={(e) => {
-                    setMale(e.target.checked);
-                    setFemale(!e.target.checked);
-                  }}
+                  onChange={(e) =>
+                    setUser({
+                      ...user,
+                      male: e.target.checked,
+                      female: !e.target.checked,
+                    })
+                  }
                 />
                 <label htmlFor="male">
                   <span>
@@ -199,10 +193,13 @@ export default function Info(props) {
                   id="female"
                   type="radio"
                   name="gender"
-                  onChange={(e) => {
-                    setFemale(e.target.checked);
-                    setMale(!e.target.checked);
-                  }}
+                  onChange={(e) =>
+                    setUser({
+                      ...user,
+                      female: e.target.checked,
+                      male: !e.target.checked,
+                    })
+                  }
                 />
                 <label htmlFor="female">
                   <span>
@@ -218,12 +215,15 @@ export default function Info(props) {
               id="ecto"
               type="radio"
               name="bodyType"
-              onChange={(e) => {
-                setEcto(e.target.checked);
-                setEndo(!e.target.checked);
-                setMeso(!e.target.checked);
-                setNEAT(900);
-              }}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  ecto: e.target.checked,
+                  endo: !e.target.checked,
+                  meso: !e.target.checked,
+                  neat: 900,
+                })
+              }
             />
             <label htmlFor="ecto">
               <span>
@@ -246,12 +246,15 @@ export default function Info(props) {
               id="meso"
               type="radio"
               name="bodyType"
-              onChange={(e) => {
-                setEcto(!e.target.checked);
-                setEndo(!e.target.checked);
-                setMeso(e.target.checked);
-                setNEAT(500);
-              }}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  ecto: !e.target.checked,
+                  endo: !e.target.checked,
+                  meso: e.target.checked,
+                  neat: 500,
+                })
+              }
             />
             <label htmlFor="meso">
               <span>
@@ -274,12 +277,15 @@ export default function Info(props) {
               id="endo"
               type="radio"
               name="bodyType"
-              onChange={(e) => {
-                setEcto(!e.target.checked);
-                setEndo(e.target.checked);
-                setMeso(!e.target.checked);
-                setNEAT(400);
-              }}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  ecto: !e.target.checked,
+                  endo: e.target.checked,
+                  meso: !e.target.checked,
+                  neat: 400,
+                })
+              }
             />
             <label htmlFor="endo">
               <span>
@@ -308,8 +314,10 @@ export default function Info(props) {
                 min="0"
                 className="userInfo"
                 type="number"
-                onChange={(e) => setDaysOfWorkouts(e.target.value)}
-                value={daysOfWorkout}
+                onChange={(e) =>
+                  setUser({ ...user, daysOfWorkout: e.target.value })
+                }
+                value={user.daysOfWorkout}
                 style={{
                   width: "80px",
                   textAlign: "center",
@@ -327,8 +335,10 @@ export default function Info(props) {
                 min="0"
                 className="userInfo"
                 type="number"
-                onChange={(e) => setDurationOfWorkout(e.target.value)}
-                value={durationOfWorkout}
+                onChange={(e) =>
+                  setUser({ ...user, durationOfWorkout: e.target.value })
+                }
+                value={user.durationOfWorkout}
                 style={{
                   width: "80px",
                   textAlign: "center",
@@ -344,12 +354,15 @@ export default function Info(props) {
                 id="gain"
                 type="radio"
                 name="goal"
-                onChange={(e) => {
-                  setGain(e.target.checked);
-                  setLose(!e.target.checked);
-                  setMaintain(!e.target.checked);
-                  setGoal(500);
-                }}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    gain: e.target.checked,
+                    lose: !e.target.checked,
+                    maintain: !e.target.checked,
+                    goal: 500,
+                  })
+                }
               />
               <label htmlFor="gain">
                 <span>
@@ -363,12 +376,15 @@ export default function Info(props) {
                 id="lose"
                 type="radio"
                 name="goal"
-                onChange={(e) => {
-                  setGain(!e.target.checked);
-                  setLose(e.target.checked);
-                  setMaintain(!e.target.checked);
-                  setGoal(-500);
-                }}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    gain: !e.target.checked,
+                    lose: e.target.checked,
+                    maintain: !e.target.checked,
+                    goal: -500,
+                  })
+                }
               />
               <label htmlFor="lose">
                 <span>
@@ -382,11 +398,15 @@ export default function Info(props) {
                 id="maintain"
                 type="radio"
                 name="goal"
-                onChange={(e) => {
-                  setGain(!e.target.checked);
-                  setLose(!e.target.checked);
-                  setMaintain(e.target.checked);
-                }}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    gain: !e.target.checked,
+                    lose: !e.target.checked,
+                    maintain: e.target.checked,
+                    goal: 0,
+                  })
+                }
               />
               <label htmlFor="maintain">
                 <span>
@@ -401,12 +421,15 @@ export default function Info(props) {
                 id="low"
                 type="radio"
                 name="diet"
-                onChange={(e) => {
-                  setLowCarbs(e.target.checked);
-                  setHighCarbs(!e.target.checked);
-                  setModerateCarbs(!e.target.checked);
-                  setIndex("2");
-                }}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    lowCarbs: e.target.checked,
+                    highCarbs: !e.target.checked,
+                    moderateCarbs: !e.target.checked,
+                    index: 2,
+                  })
+                }
               />
               <label htmlFor="low">
                 <span>
@@ -415,7 +438,7 @@ export default function Info(props) {
                 low-carbs
               </label>
 
-              {lose ? (
+              {user.lose ? (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -436,12 +459,15 @@ export default function Info(props) {
                 id="moderate"
                 type="radio"
                 name="diet"
-                onChange={(e) => {
-                  setLowCarbs(!e.target.checked);
-                  setHighCarbs(!e.target.checked);
-                  setModerateCarbs(e.target.checked);
-                  setIndex("1");
-                }}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    lowCarbs: !e.target.checked,
+                    highCarbs: !e.target.checked,
+                    moderateCarbs: e.target.checked,
+                    index: 1,
+                  })
+                }
               />
               <label htmlFor="moderate">
                 <span>
@@ -450,7 +476,7 @@ export default function Info(props) {
                 moderate-carbs
               </label>
 
-              {maintain ? (
+              {user.maintain ? (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -471,12 +497,15 @@ export default function Info(props) {
                 id="high"
                 type="radio"
                 name="diet"
-                onChange={(e) => {
-                  setLowCarbs(!e.target.checked);
-                  setHighCarbs(e.target.checked);
-                  setModerateCarbs(!e.target.checked);
-                  setIndex("0");
-                }}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    lowCarbs: !e.target.checked,
+                    highCarbs: e.target.checked,
+                    moderateCarbs: !e.target.checked,
+                    index: 0,
+                  })
+                }
               />
               <label htmlFor="high">
                 <span>
@@ -485,7 +514,7 @@ export default function Info(props) {
                 high-carbs
               </label>
 
-              {gain ? (
+              {user.gain ? (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
 import "../styles/MainCourse.css";
 
 
-function MainCourse() {
+function MainCourse(props) {
   const [recipes, setRecipes] = useState([]);
-  const history=useHistory();
 
   useEffect(() => {
     getRecipes();
@@ -27,7 +26,7 @@ function MainCourse() {
   };
 
   const showMore1 = ()=>{
-    history.push({ pathname: "/recipes", state: { type: 'Main Course' } });
+    props.history.push({ pathname: "/recipes", state: { type: 'Main Course' } });
   }
 
   return (

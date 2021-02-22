@@ -1,19 +1,14 @@
 import React from "react";
-import {
-  HashRouter as Router,
-  Route,
-  Switch
-} from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Signup from "./Signup";
 import Info from "./CreateAccount";
 import Home from "./Home";
 import Login from "./Login";
 import Search from "./Search";
 import OneRecipe from "./OneRecipe";
-import { TokenContext, TokenProvider } from "./TokenContext";
+import { TokenProvider } from "./TokenContext";
 import FavFood from "./FavFood";
 import EditAccount from "./EditAccount";
-console.log(TokenContext)
 
 export default function Container() {
   return (

@@ -6,7 +6,7 @@ export const ApiProvider = props => {
   const [query, setQuery] = useState("");
 
   return (
-    <ApiContext.Provider value={[query, setQuery]}>
+    <ApiContext.Provider value={{query, setQuery}}>
       {props.children}
     </ApiContext.Provider>
   );

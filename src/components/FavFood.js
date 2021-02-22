@@ -7,20 +7,18 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function FavFood() {
-  const [token, setToken] = useContext(TokenContext);
+  const {token} = useContext(TokenContext);
   const [favArray, setFavArray] = useState([]);
-  console.log(setToken);
 
   useEffect(() => {
-    fetch(`https://yummydb-api.herokuapp.com/get-fav`, {
-      // fetch(`http://localhost:5000/get-fav`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => setFavArray(data));
+    fetch("https://yummydb-api.herokuapp.com/get-fav", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setFavArray(data));
   }, [token]);
 
   return (

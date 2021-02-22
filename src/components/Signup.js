@@ -1,20 +1,17 @@
 import React, { useState, Fragment } from "react";
-import { useHistory } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
-export default function Signup() {
+export default function Signup(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const history = useHistory();
   const [errMsg, setErrMsg] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.length > 0 && password.length > 5) {
-      fetch(`https://yummydb-api.herokuapp.com/sign-up`, {
-      // fetch(`http://localhost:5000/sign-up`, {
+      fetch("https://yummydb-api.herokuapp.com/sign-up", {
         method: "POST",
         body: JSON.stringify({
           email: email,
@@ -25,7 +22,7 @@ export default function Signup() {
         .then((data) => {
           data.error
             ? setErrMsg(data.error)
-            : history.push({
+            : props.history.push({
                 pathname: "/create-account",
                 state: { username: username, email: email, password: password },
               });

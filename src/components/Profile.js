@@ -11,11 +11,9 @@ export default function Profile(props) {
     fat: "",
     sugar: "",
   });
-  const [token, setToken] = useContext(TokenContext);
-  console.log(setToken)
+  const {token} = useContext(TokenContext);
   useEffect(() => {
-    fetch(`https://yummydb-api.herokuapp.com/profile`, {
-    // fetch(`http://localhost:5000/profile`, {
+    fetch("https://yummydb-api.herokuapp.com/profile", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

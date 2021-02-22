@@ -14,12 +14,10 @@ const OneRecipe = ({ match }) => {
   const [instructions, setInstructions] = useState([]);
   const [servings, setServings] = useState(1);
   const [isFav, setIsFav] = useState(false);
-  const [token, setToken] = useContext(TokenContext);
+  const {token} = useContext(TokenContext);
   const [recID, setRecID] = useState();
   const [wineObj, setWineObj] = useState({});
   const [title, setTitle] = useState("");
-  console.log(setToken)
-
 
   useEffect(() => {
     fetch(
@@ -76,75 +74,76 @@ const OneRecipe = ({ match }) => {
 
     const checkFav = (id) => {
       fetch(`https://yummydb-api.herokuapp.com/check-fav/${id}`, {
-        // fetch(`http://localhost:5000/check-fav/${id}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => setIsFav(data));
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setIsFav(data));
     };
   }, [match.params.id, servings, token]);
 
   const handleAddToFav = () => {
     if (isFav) {
       fetch(`https://yummydb-api.herokuapp.com/remove-fav/${recID}`, {
-        // fetch(`http://localhost:5000/remove-fav/${recID}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setIsFav(!isFav);
-            console.log(data);
-          });
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsFav(!isFav);
+          console.log(data);
+        });
     } else {
-      fetch(`https://yummydb-api.herokuapp.com/add-fav`, {
-        // fetch(`http://localhost:5000/add-fav`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ recipe: recipe }),
-          method: "POST",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setIsFav(!isFav);
-            console.log(data);
-          });
+      fetch("https://yummydb-api.herokuapp.com/add-fav", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ recipe: recipe }),
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsFav(!isFav);
+          console.log(data);
+        });
     }
   };
 
   return (
     <div>
       <Header />
-      <h2 className="recipe-title">{title.replace(/^\w/, (c) => c.toUpperCase())}</h2>
-      
+      <h2 className="recipe-title">
+        {title.replace(/^\w/, (c) => c.toUpperCase())}
+      </h2>
+
       <div className="main-section">
         <div className="image-nutrition">
           <div className="recipe-image">
-          <div className="image-fav-icon">
-          {token ? (
-              <NavLink
-                className="star"
-                title={isFav ? "remove from favorite" : "add to favorite"}
-                onClick={handleAddToFav}
-              >
-                <FontAwesomeIcon
-                  icon={faStar}
-                  color={isFav ? "yellow" : "gray"}
-                />
-              <span id="fav-text">{isFav ? "Remove from favorite" : "Add to favorite"}</span></NavLink>
-            ) : (
-              ""
-            )}
-            <img id="image" src={recipe.image} alt={recipe.title} />
-            
+            <div className="image-fav-icon">
+              {token ? (
+                <NavLink
+                  className="star"
+                  title={isFav ? "remove from favorite" : "add to favorite"}
+                  onClick={handleAddToFav}
+                >
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    color={isFav ? "yellow" : "gray"}
+                  />
+                  <span id="fav-text">
+                    {isFav ? "Remove from favorite" : "Add to favorite"}
+                  </span>
+                </NavLink>
+              ) : (
+                ""
+              )}
+              <img id="image" src={recipe.image} alt={recipe.title} />
             </div>
             <div className="recipe-nutrition">
               <span>Calories: {ingDetails.calories}kcal</span>
@@ -154,13 +153,13 @@ const OneRecipe = ({ match }) => {
             </div>
           </div>
         </div>
-        <hr/>
+        <hr />
         <div className="ingrediets-instructions">
           <div className="section">
             <h3 className="title">Ingredients</h3>
             <h5 className="text-servings">
               Servings:
-              <input 
+              <input
                 id="input-servings"
                 autoFocus
                 type="Number"
@@ -172,11 +171,9 @@ const OneRecipe = ({ match }) => {
 
             <div className="ingredients-section">
               {console.log(ingredients)}
-              
+
               {ingredients.map((res) => (
-                
                 <div key={Math.random()} className="ingredients">
-                
                   <p className="ingredients-details">
                     {res.amount * servings} {res.unit}
                   </p>
@@ -191,28 +188,28 @@ const OneRecipe = ({ match }) => {
                 </div>
               ))}
             </div>
-          </div><hr/>
+          </div>
+          <hr />
           <div className="section">
             <h3 className="title">Instructions</h3>
             {instructions.map((res) => (
               <li key={Math.random()}>
-              <span className="badge badge-warning">{res.number}</span>
+                <span className="badge badge-warning">{res.number}</span>
                 {/* <span id="instruction-number">{res.number}</span> */}
                 <span id="instruction">{res.step}</span>
               </li>
             ))}
           </div>
-            {wineObj.pairedWines  ? (
-              
-              <div className="section"><hr/>
-                <h3 className="title">Wine pairing</h3>
-                {wineObj.pairingText}
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        
+          {wineObj.pairedWines ? (
+            <div className="section">
+              <hr />
+              <h3 className="title">Wine pairing</h3>
+              {wineObj.pairingText}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <Footer />
     </div>

@@ -15,7 +15,7 @@ import Footer from "./Footer";
 
 const Search = (props) => {
   const [recipies, setRecipies] = useState([]);
-  const [query, setQuery] = useContext(ApiContext);
+  const {query} = useContext(ApiContext);
   const [cuisine, setCuisine] = useState("");
   const [diet, setDiet] = useState("");
   const [intolerance, setIntolerance] = useState("");
@@ -23,7 +23,7 @@ const Search = (props) => {
     props.location.state ? props.location.state.type : ""
   );
   const [recipeNumber, setRecipeNumber] = useState(12);
-  console.log(setQuery)
+  
 
 
   useEffect(() => {

@@ -23,16 +23,13 @@ export default function Login(props) {
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           let token = res.headers.get("auth");
           setToken(token);
-          console.log(token);
         }
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         if (data.err) {
           setErrMsg(data.err);
         } else {

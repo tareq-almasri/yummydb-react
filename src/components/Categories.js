@@ -21,9 +21,6 @@ function Categories() {
     )
       .then((res) => res.json())
       .then((res) => setRecipes(res.results))
-      .catch((err) => {
-        console.log(err);
-      });
       
         fetch(
           `https://api.spoonacular.com/recipes/search?&type=Dessert&offset=0&number=12&apiKey=${process.env.REACT_APP_API_IN_USE} `,
@@ -35,10 +32,7 @@ function Categories() {
           .then((res) => res.json())
           .then((res) => setRecipesB(res.results))
 
-          .catch((err) => {
-            console.log(err);
-          });
-      
+         
   };
 
   const showMore2 = () => {

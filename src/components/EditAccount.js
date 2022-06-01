@@ -101,7 +101,7 @@ export default function EditAccount(props) {
     user.male ? (sugar = 37.5) : (sugar = 25);
 
     if (TDEE) {
-      console.log(TDEE, GoalCal, protein, carbs, fat, sugar);
+      
       fetch("https://yummydb-api.herokuapp.com/edit-account", {
         method: "POST",
         body: JSON.stringify({
@@ -121,9 +121,7 @@ export default function EditAccount(props) {
         .then((response) => response.json())
         .then((data) => console.log(data));
       props.history.push("/");
-    } else {
-      console.log("some fields are missing");
-    }
+    } 
   };
 
   return (

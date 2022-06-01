@@ -37,9 +37,6 @@ const Search = (props) => {
     )
       .then((res) => res.json())
       .then((res) => setRecipies(res.results))
-      .catch((err) => {
-        console.log(err);
-      });
     
   }, [cuisine, diet, intolerance, type, query, recipeNumber]);
 

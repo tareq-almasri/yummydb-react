@@ -20,9 +20,7 @@ function MainCourse(props) {
     )
       .then((res) => res.json())
       .then((res) => setRecipes(res.results))
-      .catch((err) => {
-        console.log(err);
-      });
+     
   };
 
   const showMore1 = ()=>{

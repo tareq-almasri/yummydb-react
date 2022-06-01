@@ -27,7 +27,7 @@
     "redux": "^4.0.5"
   },
   "scripts": {
-    "start": "env-cmd -f .env react-scripts start",
+    "start": "PORT=9709 env-cmd -f .env react-scripts start",
     "build": "env-cmd react-scripts build",
     "test": "env-cmd react-scripts test",
     "eject": "react-scripts eject"

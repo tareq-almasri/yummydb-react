@@ -38,9 +38,7 @@ const OneRecipe = ({ match }) => {
           checkFav(res.id);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+     
     fetch(
       `https://api.spoonacular.com/recipes/${match.params.id}/nutritionWidget.json?&apiKey=${process.env.REACT_APP_API_IN_USE}`,
       {
@@ -52,9 +50,7 @@ const OneRecipe = ({ match }) => {
     )
       .then((res) => res.json())
       .then((res) => setIngDetails(res))
-      .catch((err) => {
-        console.log(err);
-      });
+
     fetch(
       `https://api.spoonacular.com/recipes/${match.params.id}/analyzedInstructions?&apiKey=${process.env.REACT_APP_API_IN_USE}`,
       {
@@ -66,9 +62,6 @@ const OneRecipe = ({ match }) => {
     )
       .then((res) => res.json())
       .then((res) => setInstructions(res[0].steps))
-      .catch((err) => {
-        console.log(err);
-      });
 
     const checkFav = (id) => {
       fetch(`https://yummydb-api.herokuapp.com/check-fav/${id}`, {
@@ -94,7 +87,6 @@ const OneRecipe = ({ match }) => {
         .then((res) => res.json())
         .then((data) => {
           setIsFav(!isFav);
-          console.log(data);
         });
     } else {
       fetch("https://yummydb-api.herokuapp.com/add-fav", {
@@ -108,7 +100,6 @@ const OneRecipe = ({ match }) => {
         .then((res) => res.json())
         .then((data) => {
           setIsFav(!isFav);
-          console.log(data);
         });
     }
   };

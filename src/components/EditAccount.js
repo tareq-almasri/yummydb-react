@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { TokenContext } from "./TokenContext";
-import Header from "./Header";
-import Footer from "./Footer";
 
 export default function EditAccount(props) {
   const [user, setUser] = useState({
@@ -35,7 +33,7 @@ export default function EditAccount(props) {
     highCarbs: false,
   });
 
-  const {token} = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
 
   const ratios = [
     {
@@ -130,7 +128,6 @@ export default function EditAccount(props) {
 
   return (
     <div>
-      <Header />
       <form style={{ paddingBottom: "30px" }} onSubmit={handleSubmit}>
         <div
           style={{
@@ -250,7 +247,6 @@ export default function EditAccount(props) {
                 margin: "0 0 15px 20px",
               }}
             >
-              {" "}
               * struggles to gain weight
             </p>
 
@@ -282,7 +278,6 @@ export default function EditAccount(props) {
                 margin: "0 0 15px 20px",
               }}
             >
-              {" "}
               * easily gains and loses weight
             </p>
 
@@ -314,7 +309,6 @@ export default function EditAccount(props) {
                 textAlign: "start",
               }}
             >
-              {" "}
               * easily gains weight, struggles to lose weight
             </p>
           </div>
@@ -338,7 +332,6 @@ export default function EditAccount(props) {
                   marginRight: "10px",
                 }}
               />
-              {"  "}
               day(s)
             </div>
             <div>
@@ -359,7 +352,6 @@ export default function EditAccount(props) {
                   marginRight: "10px",
                 }}
               />
-              {"  "}
               minutes
             </div>
             <h1 style={{ marginTop: "15px" }}>Set a Goal:</h1>
@@ -456,7 +448,7 @@ export default function EditAccount(props) {
                 low-carbs
               </label>
 
-              {user.lose ? (
+              {user.lose && (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -468,8 +460,6 @@ export default function EditAccount(props) {
                 >
                   recommended
                 </span>
-              ) : (
-                ""
               )}
             </div>
             <div style={{ height: "30px" }}>
@@ -495,7 +485,7 @@ export default function EditAccount(props) {
                 moderate-carbs
               </label>
 
-              {user.maintain ? (
+              {user.maintain && (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -507,8 +497,6 @@ export default function EditAccount(props) {
                 >
                   recommended
                 </span>
-              ) : (
-                ""
               )}
             </div>
             <div style={{ height: "30px" }}>
@@ -534,7 +522,7 @@ export default function EditAccount(props) {
                 high-carbs
               </label>
 
-              {user.gain ? (
+              {user.gain && (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -546,8 +534,6 @@ export default function EditAccount(props) {
                 >
                   recommended
                 </span>
-              ) : (
-                ""
               )}
             </div>
           </div>
@@ -556,8 +542,6 @@ export default function EditAccount(props) {
           <button className="bbtn">Update</button>
         </div>
       </form>
-
-      <Footer />
     </div>
   );
 }

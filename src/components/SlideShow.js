@@ -113,14 +113,6 @@ const SlideShow = () => {
 
   return (
     <div>
-      <style>
-        {`.custom-tag {
-             width: 100%;
-              height: 500px;
-              background: black;
-              z-index: 1;
-            }`}
-      </style>
       <Carousel activeIndex={activeIndex} next={next} previous={previous}>
         <CarouselIndicators
           items={items}

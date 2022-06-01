@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {token, setToken} = useContext(TokenContext);
+  const { token, setToken } = useContext(TokenContext);
   const [show, setShow] = useState(false);
 
   const handleSignOut = () => {
@@ -74,9 +74,9 @@ const Header = () => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto, nav-bar" navbar>
             <NavItem style={{ paddingLeft: "40px" }}>
-              <Link to="/recipes">
+              <Link style={{ textDecoration: "none" }} to="/recipes">
                 <div className="navLinkBtn recipes-btn">
-                  Recipes{" "}
+                  Recipes
                   <FontAwesomeIcon className="search-icon" icon={faUtensils} />
                 </div>
               </Link>
@@ -88,7 +88,7 @@ const Header = () => {
               <div className="nav">
                 <NavLink>
                   <div className="navLinkBtn" onClick={handleShowInfo}>
-                    <span>{show ? "hide info" : "show info"}</span>{" "}
+                    <span>{show ? "hide info" : "show info"}</span>
                     {show ? (
                       <FontAwesomeIcon
                         style={{ paddingTop: "4px" }}
@@ -103,14 +103,22 @@ const Header = () => {
                   </div>
                 </NavLink>
                 <NavItem>
-                  <Link title="your favorite recipes" to="/favorite">
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    title="your favorite recipes"
+                    to="/favorite"
+                  >
                     <div className="navLinkBtn">
                       <FontAwesomeIcon icon={faStar} />
                     </div>
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link title="update your info" to="/edit-account-info">
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    title="update your info"
+                    to="/edit-account-info"
+                  >
                     <div className="navLinkBtn">
                       <FontAwesomeIcon icon={faUserEdit} />
                     </div>
@@ -135,12 +143,12 @@ const Header = () => {
                 }}
               >
                 <NavItem>
-                  <Link to="/sign-up">
+                  <Link style={{ textDecoration: "none" }} to="/sign-up">
                     <div className="navLinkBtn">Sign up</div>
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/login">
+                  <Link style={{ textDecoration: "none" }} to="/login">
                     <div className="navLinkBtn">Log in</div>
                   </Link>
                 </NavItem>

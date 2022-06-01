@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../styles/OneRecipe.css";
-import Header from "./Header";
-import Footer from "./Footer";
 import { TokenContext } from "./TokenContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +12,7 @@ const OneRecipe = ({ match }) => {
   const [instructions, setInstructions] = useState([]);
   const [servings, setServings] = useState(1);
   const [isFav, setIsFav] = useState(false);
-  const {token} = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   const [recID, setRecID] = useState();
   const [wineObj, setWineObj] = useState({});
   const [title, setTitle] = useState("");
@@ -117,7 +115,6 @@ const OneRecipe = ({ match }) => {
 
   return (
     <div>
-      <Header />
       <h2 className="recipe-title">
         {title.replace(/^\w/, (c) => c.toUpperCase())}
       </h2>
@@ -126,7 +123,7 @@ const OneRecipe = ({ match }) => {
         <div className="image-nutrition">
           <div className="recipe-image">
             <div className="image-fav-icon">
-              {token ? (
+              {token && (
                 <NavLink
                   className="star"
                   title={isFav ? "remove from favorite" : "add to favorite"}
@@ -140,8 +137,6 @@ const OneRecipe = ({ match }) => {
                     {isFav ? "Remove from favorite" : "Add to favorite"}
                   </span>
                 </NavLink>
-              ) : (
-                ""
               )}
               <img id="image" src={recipe.image} alt={recipe.title} />
             </div>
@@ -195,23 +190,19 @@ const OneRecipe = ({ match }) => {
             {instructions.map((res) => (
               <li key={Math.random()}>
                 <span className="badge badge-warning">{res.number}</span>
-                {/* <span id="instruction-number">{res.number}</span> */}
                 <span id="instruction">{res.step}</span>
               </li>
             ))}
           </div>
-          {wineObj.pairedWines ? (
+          {wineObj.pairedWines && (
             <div className="section">
               <hr />
               <h3 className="title">Wine pairing</h3>
               {wineObj.pairingText}
             </div>
-          ) : (
-            ""
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

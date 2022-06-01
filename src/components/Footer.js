@@ -43,9 +43,9 @@ export default function Footer() {
                 <span style={{ color: "#379344" }}>spoonacular API</span>
               </NavLink>
             </div>
-            <span>made by Tareq & Ion & Givara at DCI</span>{" "}
+            <span>Tareq Almasri </span>
             <span>&copy; 2020</span>
-            <div>All rights reserved</div>
+            <div style={{fontSize: '13px'}}>special thanks to Ion & Givara</div>
           </div>
           <div>
             <div
@@ -63,7 +63,7 @@ export default function Footer() {
               <FontAwesomeIcon icon={faPinterest} color="#f72541" />
               <FontAwesomeIcon icon={faYoutube} color="#e5162f" />
             </div>
-            <Link to='#' style={{ marginRight: "20px" }}>About Us</Link>{" "}
+            <Link to='#' style={{ marginRight: "20px" }}>About Us</Link>
             <Link to='#'>Privacy Policy</Link>
           </div>
         </div>

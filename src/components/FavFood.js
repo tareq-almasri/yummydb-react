@@ -3,11 +3,9 @@ import { TokenContext } from "./TokenContext";
 import { Link } from "react-router-dom";
 import "../styles/Search.css";
 
-import Header from "./Header";
-import Footer from "./Footer";
 
 export default function FavFood() {
-  const {token} = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   const [favArray, setFavArray] = useState([]);
 
   useEffect(() => {
@@ -23,7 +21,6 @@ export default function FavFood() {
 
   return (
     <Fragment>
-      <Header />
       <div id="body">
         <h1 style={{ paddingTop: "30px" }} id="fav-recipes">
           Favorite recipes
@@ -49,7 +46,6 @@ export default function FavFood() {
           ))}
         </div>
       </div>
-      <Footer />
     </Fragment>
   );
 }

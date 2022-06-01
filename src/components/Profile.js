@@ -78,7 +78,7 @@ export default function Profile(props) {
           <div style={{ textAlign: "center", padding: "5px" }}>
             <span title="Total Daily Energy Expenditure">
               <b>TDEE: </b>
-            </span>{" "}
+            </span>
             <span
               style={{
                 color: "#fff",
@@ -89,7 +89,7 @@ export default function Profile(props) {
               }}
             >
               {info.TDEE}
-            </span>{" "}
+            </span>
             kcal
             <p style={{ color: "#3d3b3b" }}>
               (your daily calories to maintain your current weight)
@@ -107,7 +107,7 @@ export default function Profile(props) {
               }}
             >
               {info.goal}
-            </span>{" "}
+            </span>
             kcal
           </div>
           <div style={{ padding: "5px" }}>
@@ -122,7 +122,7 @@ export default function Profile(props) {
               }}
             >
               {info.protein}
-            </span>{" "}
+            </span>
             g
           </div>
           <div style={{ padding: "5px" }}>
@@ -137,8 +137,8 @@ export default function Profile(props) {
               }}
             >
               {info.carbs}
-            </span>{" "}
-            g{" "}
+            </span>
+            g
           </div>
           <div style={{ padding: "5px" }}>
             <b>Fat: </b>
@@ -152,8 +152,8 @@ export default function Profile(props) {
               }}
             >
               {info.fat}
-            </span>{" "}
-            g{" "}
+            </span>
+            g
           </div>
           <div style={{ padding: "5px" }}>
             <b>Sugar: </b>
@@ -167,8 +167,8 @@ export default function Profile(props) {
               }}
             >
               {info.sugar}
-            </span>{" "}
-            g{" "}
+            </span>
+            g
           </div>
           <div style={{ padding: "5px" }}>
             <b>Caffein: </b>
@@ -182,7 +182,7 @@ export default function Profile(props) {
               }}
             >
               400-500
-            </span>{" "}
+            </span>
             mg
           </div>
         </div>

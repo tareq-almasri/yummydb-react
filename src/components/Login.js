@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { TokenContext } from "./TokenContext";
-import Header from "./Header";
-import Footer from "./Footer";
 
 export default function Login(props) {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -14,7 +13,7 @@ export default function Login(props) {
       setEmail(props.location.state.email);
       setPassword(props.location.state.password);
     }
-  });
+  },[props.location.state]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,9 +40,10 @@ export default function Login(props) {
         }
       });
   };
+
+
   return (
     <div>
-      <Header />
       <div
         style={{
           display: "flex",
@@ -74,7 +74,6 @@ export default function Login(props) {
           </div>
         </form>
       </div>
-      <Footer />
     </div>
   );
 }

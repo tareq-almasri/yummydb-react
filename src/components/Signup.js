@@ -1,6 +1,4 @@
 import React, { useState, Fragment } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
 
 export default function Signup(props) {
   const [username, setUsername] = useState("");
@@ -32,7 +30,6 @@ export default function Signup(props) {
 
   return (
     <Fragment>
-      <Header />
       <div
         style={{
           display: "flex",
@@ -77,13 +74,11 @@ export default function Signup(props) {
           <div>* min 6 characters</div>
           <div style={{ width: "100%", textAlign: "center", padding: "30px" }}>
             <button className="bbtn" type="submit">
-              {" "}
               next
             </button>
           </div>
         </form>
       </div>
-      <Footer />
     </Fragment>
   );
 }

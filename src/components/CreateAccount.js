@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Footer from "./Footer";
-import Header from "./Header";
 
 export default function Info(props) {
   const [user, setUser] = useState({
@@ -121,7 +119,6 @@ export default function Info(props) {
 
   return (
     <div>
-      <Header />
       <form style={{ paddingBottom: "30px" }} onSubmit={handleSubmit}>
         <div
           style={{
@@ -238,7 +235,6 @@ export default function Info(props) {
                 margin: "0 0 15px 20px",
               }}
             >
-              {" "}
               * struggles to gain weight
             </p>
 
@@ -269,7 +265,6 @@ export default function Info(props) {
                 margin: "0 0 15px 20px",
               }}
             >
-              {" "}
               * easily gains and loses weight
             </p>
 
@@ -300,7 +295,6 @@ export default function Info(props) {
                 textAlign: "start",
               }}
             >
-              {" "}
               * easily gains weight, struggles to lose weight
             </p>
           </div>
@@ -324,7 +318,6 @@ export default function Info(props) {
                   marginRight: "10px",
                 }}
               />
-              {"  "}
               day(s)
             </div>
             <div>
@@ -345,7 +338,6 @@ export default function Info(props) {
                   marginRight: "10px",
                 }}
               />
-              {"  "}
               minutes
             </div>
             <h1 style={{ marginTop: "15px" }}>Set a Goal:</h1>
@@ -438,7 +430,7 @@ export default function Info(props) {
                 low-carbs
               </label>
 
-              {user.lose ? (
+              {user.lose && (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -450,8 +442,6 @@ export default function Info(props) {
                 >
                   recommended
                 </span>
-              ) : (
-                ""
               )}
             </div>
             <div style={{ height: "30px" }}>
@@ -476,7 +466,7 @@ export default function Info(props) {
                 moderate-carbs
               </label>
 
-              {user.maintain ? (
+              {user.maintain && (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -488,8 +478,6 @@ export default function Info(props) {
                 >
                   recommended
                 </span>
-              ) : (
-                ""
               )}
             </div>
             <div style={{ height: "30px" }}>
@@ -514,7 +502,7 @@ export default function Info(props) {
                 high-carbs
               </label>
 
-              {user.gain ? (
+              {user.gain && (
                 <span
                   style={{
                     backgroundColor: "#7dbf37",
@@ -526,8 +514,6 @@ export default function Info(props) {
                 >
                   recommended
                 </span>
-              ) : (
-                ""
               )}
             </div>
           </div>
@@ -540,15 +526,12 @@ export default function Info(props) {
             textAlign: "center",
           }}
         >
-          {" "}
-          {errMsg}{" "}
+          {errMsg}
         </div>
         <div style={{ textAlign: "center" }}>
           <button className="bbtn">Sign Up</button>
         </div>
       </form>
-
-      <Footer />
     </div>
   );
 }

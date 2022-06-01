@@ -10,8 +10,6 @@ import {
   Button,
 } from "reactstrap";
 import { ApiContext } from "./ApiContext";
-import Header from "./Header";
-import Footer from "./Footer";
 
 const Search = (props) => {
   const [recipies, setRecipies] = useState([]);
@@ -136,7 +134,6 @@ const Search = (props) => {
 
   return (
     <Fragment>
-      <Header />
       <div
         id="body"
       >
@@ -289,7 +286,6 @@ const Search = (props) => {
           </Button>
         </div>
       </div>
-      <Footer />
     </Fragment>
   );
 };
